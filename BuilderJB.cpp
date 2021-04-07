@@ -2,7 +2,7 @@
 // of objects with many constructor parameters. It is not the
 // GOF (Gang of Four) builder pattern. 
 //simplify the instantiation of objects with many constructor parameters or many optional parameters.
-
+/*
           +-----------------+      +---------------+
           |                 +------>               |
           |   UserBuilder   |      |   UserData    |
@@ -16,9 +16,18 @@
 		   |    Client     |
 		   |               |
 		   +---------------+
+*/
 			   
 #include <iostream>
 #include <string>
+
+template <typename ...T> //variadic template
+void Log(T&&... args) //rvalue ref
+{
+    //warning: fold-expressions only available with '-std=c++17' or '-std=gnu++17'
+    ((std::cout << args), ...); 
+    std::cout<<'\n';
+}
 
 // Function meta object 
 class UserData{
@@ -35,14 +44,14 @@ public:
         ~UserData() = default;
 
         auto show() -> void
-        {
-            std::cout << "\nUser{"
-                      << "\n" << "  id        = " << userID
-                      << "\n" << "  name      = " << name
-                      << "\n" << "  last name = " << lastName
-                      << "\n" << "  email     = " << email
-                      << "\n" << "}"
-                      << "\n";
+        {  
+            Log("\nUser{",
+            "\n  id        = ",userID,
+            "\n  name      = " , name,
+            "\n  last name = " , lastName,
+            "\n  email     = " , email,
+            "\n }");
+
         }
 
         // Allow builder class access UserData's private data
@@ -80,7 +89,7 @@ public:
 }; //--- EoF class UserData::builder --- //
 
 int main(){
-
+    Log("\nUser{");
     auto user1 =
             UserBuilder()
             .setID(1065)
