@@ -2,6 +2,21 @@
 // of objects with many constructor parameters. It is not the
 // GOF (Gang of Four) builder pattern. 
 //simplify the instantiation of objects with many constructor parameters or many optional parameters.
+
+          +-----------------+      +---------------+
+          |                 +------>               |
+          |   UserBuilder   |      |   UserData    |
+          |                 |      |               |
+          +--------^--------+      +---------------+
+                   |
+                   |
+                   +  build
+                   |
+		   +-------+-------+
+		   |    Client     |
+		   |               |
+		   +---------------+
+			   
 #include <iostream>
 #include <string>
 
